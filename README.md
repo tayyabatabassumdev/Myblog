@@ -1,3 +1,9 @@
+
+<img width="1919" height="559" alt="image" src="https://github.com/user-attachments/assets/af1b867c-5351-49c8-9ed6-598afdbae04d" />
+<img width="1890" height="870" alt="image" src="https://github.com/user-attachments/assets/5c0fc43b-fb06-4bd2-aea5-fbbd8b52d18c" />
+<img width="1918" height="867" alt="image" src="https://github.com/user-attachments/assets/9b666ceb-b347-409e-8ee1-d388ddc62675" />
+<img width="1884" height="887" alt="image" src="https://github.com/user-attachments/assets/bbb66fd1-e4e4-4b05-9cb7-233c9ab06b71" />
+
 # Postify
 
 A modern **React blog application** where users can read, write, proofread, and manage blog posts — built using **React**, **Zustand**, and **Tailwind CSS**.
