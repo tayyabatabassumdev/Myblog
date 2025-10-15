@@ -1,53 +1,60 @@
+import { useState } from "react";
+import Posts from "../components/posts/PostContainer";
 import { usePostStore } from "../store/postStore";
-import PostContainer from "../components/PostContainer";
-
 const Home = () => {
-  const { categories, selectedCategory, setCategory, searchQuery, setSearchQuery } =
-    usePostStore();
-
+  const categories = usePostStore((s) => s.categories);
+  const selectedCategory = usePostStore((s) => s.selectedCategory);
+  const setCategory = usePostStore((s) => s.setCategory);
+  const [showAll, setShowAll] = useState(false);
+  const visibleCategories = showAll ? categories : categories.slice(0, 5);
   return (
-    <div className="max-w-6xl mx-auto py-10 px-4">
-      <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-        <h1 className="text-3xl font-bold text-gray-800">Explore Posts</h1>
-
-        <input
-          type="text"
-          placeholder="Search posts..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 w-full sm:w-72 focus:ring-2 focus:ring-blue-400"
-        />
+    <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-12 text-center mb-10 shadow-sm">
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-3">
+          Discover Great Stories
+        </h1>
+        <p className="text-gray-600 max-w-2xl mx-auto">
+          Read, write, and share your thoughts. Explore insightful posts from
+          creative minds.
+        </p>
       </div>
-
-      <div className="flex flex-wrap gap-2 mb-6">
-        <button
-          onClick={() => setCategory("All")}
-          className={`px-4 py-2 rounded-full ${
-            selectedCategory === "All"
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 hover:bg-gray-300"
-          }`}
-        >
-          All
-        </button>
-        {categories.map((cat) => (
+      <div className="flex flex-wrap items-center justify-between mb-8">
+        <div className="flex gap-3 flex-wrap">
           <button
-            key={cat}
-            onClick={() => setCategory(cat)}
-            className={`px-4 py-2 rounded-full ${
-              selectedCategory === cat
+            onClick={() => setCategory("All")}
+            className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+              selectedCategory === "All"
                 ? "bg-blue-600 text-white"
                 : "bg-gray-200 hover:bg-gray-300"
             }`}
           >
-            {cat}
+            All
           </button>
-        ))}
+          {visibleCategories.map((c) => (
+            <button
+              key={c}
+              onClick={() => setCategory(c)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition ${
+                selectedCategory === c
+                  ? "bg-blue-600 text-white"
+                  : "bg-gray-200 hover:bg-gray-300"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+          {categories.length > 5 && (
+            <button
+              onClick={() => setShowAll((prev) => !prev)}
+              className="px-4 py-2 text-sm font-medium text-blue-600 hover:underline"
+            >
+              {showAll ? "Show Less" : "Show More"}
+            </button>
+          )}
+        </div>
       </div>
-
-      <PostContainer />
+      <Posts />
     </div>
   );
 };
-
 export default Home;

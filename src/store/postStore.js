@@ -1,52 +1,49 @@
 import { create } from "zustand";
 import { getPosts, addPost, deletePost } from "../api/posts";
-
 export const usePostStore = create((set, get) => ({
   posts: [],
-  categories: ["Tech", "Lifestyle", "Business", "Education", "Health"],
+  categories: ["History", "French", "Magical", "Mystery", "Crime", "English","American","Fiction","Love","Classic"],
   selectedCategory: "All",
   searchQuery: "",
   setPosts: (posts) => set({ posts }),
-  setSearchQuery: (query) => set({ searchQuery: query }),
-  setCategory: (category) => set({ selectedCategory: category }),
-
+  setSearchQuery: (searchQuery) => set({ searchQuery }),
+  setCategory: (selectedCategory) => set({ selectedCategory }),
   fetchPosts: async () => {
-    try {
-      const data = await getPosts();
-      set({ posts: data });
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    }
-  },
+  set({ isLoading: true, error: null });
+  try {
+    const data = await getPosts();
+    const dynamicCategories = [...new Set(data.map(post => post.category || post.tag || "General").filter(Boolean))];
+    set({ posts: data, categories: dynamicCategories, isLoading: false });
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    set({ isLoading: false, error: error.message ?? "Failed to fetch posts" });
+  }
+},
 
   createPost: async (title, body, category, imageBase64) => {
     try {
-      const newPost = { title, body, category, image: imageBase64, userId: 1 };
-      const addedPost = await addPost(newPost);
-      set({ posts: [...get().posts, addedPost] });
+      const newPost = {
+        id: Date.now(),
+        title,
+        body,
+        category,
+        image:
+          imageBase64 || `https://picsum.photos/800/500?random=${Date.now()}`,
+      };
+      set({ posts: [newPost, ...get().posts] });
     } catch (error) {
       console.error("Error adding post:", error);
     }
   },
-
   removePost: async (id) => {
     try {
-      await deletePost(id);
-      set({ posts: get().posts.filter((post) => post.id !== id) });
+      if (id < 500) {
+        await deletePost(id);
+      }
+      set({ posts: get().posts.filter((p) => p.id !== id) });
     } catch (error) {
       console.error("Error deleting post:", error);
+      set({ posts: get().posts.filter((p) => p.id !== id) });
     }
-  },
-
-  getFilteredPosts: () => {
-    const { posts, searchQuery, selectedCategory } = get();
-    return posts.filter((p) => {
-      const matchesSearch =
-        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.body.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory =
-        selectedCategory === "All" || p.category === selectedCategory;
-      return matchesSearch && matchesCategory;
-    });
   },
 }));

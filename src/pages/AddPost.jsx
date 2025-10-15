@@ -1,9 +1,12 @@
-import Form from "../components/Form";
+import PostForm from "../components/Form/PostForm";
 const AddPost = () => {
   return (
-    <div className="max-w-lg mx-auto mt-10 bg-white shadow-md rounded-xl p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-4 text-center">Add New Post</h1>
-      <Form></Form>
+    <div className="max-w-3xl mx-auto px-6 py-12">
+      <div className="bg-white rounded-2xl shadow-lg p-8">
+        <h1 className="text-3xl font-bold mb-3">Write a new post</h1>
+        <p className="text-gray-600 mb-6">Proofread before publishing, upload an image, choose a category and preview.</p>
+        <PostForm />
+      </div>
     </div>
   );
 };
