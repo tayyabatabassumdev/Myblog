@@ -1,16 +1,78 @@
-# React + Vite
+# Postify
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern **React blog application** where users can read, write, proofread, and manage blog posts — built using **React**, **Zustand**, and **Tailwind CSS**.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✅ Fetches posts dynamically from [DummyJSON API](https://dummyjson.com/posts)  
+✅ Create new posts with image upload (stored in Base64)  
+✅ Proofreading support via [LanguageTool API](https://languagetool.org)  
+✅ Category filtering and search functionality  
+✅ Persistent state management with Zustand  
+✅ Delete posts (API + locally added)  
+✅ Responsive, minimal, and elegant UI  
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Layer | Technology |
+|-------|-------------|
+| Frontend | React + Vite |
+| State Management | Zustand |
+| Styling | Tailwind CSS |
+| Proofreading | LanguageTool API |
+| API Source | DummyJSON Posts API |
 
-## Expanding the ESLint configuration
+## Folder Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+src/
+├── api/ # API helper functions
+├── components/ # Reusable UI components
+│ ├── Navbar/
+│ ├── Form/
+│ ├── Post/
+│ └── Category/
+├── pages/ # Route components (Home, AddPost, About, etc.)
+├── store/ # Zustand store (postStore.js)
+├── App.jsx # Main app layout
+└── main.jsx # React entry point
+
+##  Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/postify.git
+   cd postify
+Install dependencies
+
+bash
+Copy code
+npm install
+Run the development server
+
+bash
+Copy code
+npm run dev
+Open in browser
+
+arduino
+Copy code
+http://localhost:5173
+## Usage
+Click Write in the navbar to create a post.
+You can upload an image (Base64), select a category, and proofread before publishing.
+Posts are fetched from DummyJSON.
+Use the search bar to quickly find posts.
+Click Delete to remove unwanted posts.
+
+## Future Improvements
+✅ User authentication
+✅ Edit post functionality
+🕓 Backend integration for real persistence
+🕓 Dark mode toggle
+🕓 Pagination and lazy loading
+
+## License
+This project is licensed under the MIT License — feel free to use and modify it.
+
+## Author
+Tayyaba Tabassum
