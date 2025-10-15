@@ -1,8 +1,15 @@
-const BASE_URL = "https://jsonplaceholder.typicode.com/posts";
+const BASE_URL = "https://dummyjson.com/posts";
 export const getPosts = async () => {
-  const res = await fetch(`${BASE_URL}?_limit=12`);
+  const res = await fetch(`${BASE_URL}`);
   if (!res.ok) throw new Error("Failed to fetch posts");
-  return res.json();
+  const data = await res.json();
+  return data.posts.map((p) => ({
+    id: p.id,
+    title: p.title,
+    body: p.body,
+    category: p.tags?.[0] || "General",
+    image: `https://picsum.photos/600/400?random=${p.id}`, // mock image since dummyjson doesn’t include one
+  }));
 };
 export const addPost = async (newPost) => {
   const res = await fetch(BASE_URL, {
